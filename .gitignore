@@ -30,3 +30,6 @@ proguard/
 
 # Android Studio captures folder
 captures/
+/ExpandLayoutManager/.idea
+/ExpandLayoutManager/*.iml
+/ExpandLayoutManager/sample/*.iml
