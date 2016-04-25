@@ -1,0 +1,268 @@
+{
+  "cities": [
+    {
+      "id": 1,
+      "name": "Barcelona",
+      "description": "In a privileged position on the northeastern coast of the Iberian peninsula and the shores of the Mediterranean, Barcelona is the second largest city in Spain in both size and population. It is also the capital of Catalonia, 1 of the 17 Autonomous Communities that make up Spain.\n\nThere are two official languages spoken in Barcelona: Catalan, generally spoken in all of Catalonia, and Castillian Spanish. The city of Barcelona has a population of 1.510.000, but this number spirals to more than 4.000.000 if the outlying areas are also included.\n\nThe capital of Catalonia is unequivocally a Mediterranean city, not only because of its geographic location but also and above all because of its history, tradition and cultural influences. The documented history of the city dates back to the founding of a Roman colony on its soil in the second century B.C. Modern Barcelona experienced spectacular growth and economic revival at the onset of industrialization during the second half of the 19th century. The 1888 World's Fair became a symbol of the capacity for hard work and the international outlook projected by the city. Culture and the arts flourished in Barcelona and in all of Catalonia; the splendor achieved by Catalonian modernism is one of the most patent displays.",
+      "image_url": "images/01_barcelona.jpg",
+      "country": null,
+      "location": {
+        "latitude": 41.3887869,
+        "longitude": 2.1589851
+      }
+    },
+    {
+      "id": 2,
+      "name": "Bergen",
+      "description": "Surrounded by seven hills and seven fjords, Bergen is a beautiful, charming city. With the Unesco World Heritage–listed Bryggen and buzzing Vågen harbour as its centrepiece, Bergen climbs the hillsides with hundreds of timber-clad houses, while cable cars offer stunning views from above. Throw in great museums, friendly locals and a dynamic cultural life and Bergen amply rewards as much time as you can give it. A word of warning, however: In summer Bergen gets a little overwhelmed by visitors (with a 25% increase in visitors in the last five years) and finding accommodation can be a problem so always book ahead.",
+      "image_url": "images/02_bergen.jpg",
+      "country": null,
+      "location": {
+        "latitude": 60.391294,
+        "longitude": 5.32205
+      }
+    },
+    {
+      "id": 3,
+      "name": "Chicago",
+      "description": "The City of Chicago covers an  area of 60,000 hectares and sits 176 meters (578 feet) above sea level on the southwestern shore of Lake Michigan. At 190 km wide and 495 km long, its the 5th largest body of fresh water in the world. The city is traversed by the Chicago and Calumet rivers. Chicago's extensive parklands, including 3,000 hectares of city parks attract an estimated 86 million visitors annually.\n\nAs a multicultural city that thrives on the harmony and diversity of its neighborhoods, Chicago today embodies the values of America's heartland-integrity, hard work and community and reflects the ideals in the social fabric of  its 77 distinct neighborhoods.\n\nChicago is recognized across the United States as a very passionate sports town.\n\nChicago is a leader in reforming public schools, enhancing public safety and security initiatives, providing affordable housing in attractive and economically sound communities, ensuring accessibility for all and fostering, social, economic and environmental sustainability.",
+      "image_url": "images/03_chicago.jpg",
+      "country": null,
+      "location": {
+        "latitude": 41.850033,
+        "longitude": -87.6500549
+      }
+    },
+    {
+      "id": 4,
+      "name": "Dubai",
+      "description": "The 'Pearl of the Arabian Gulf', the area of Dubai is 3885 km², equivalent to 5% of the United Arab Emirates' total area excluding the islands. The Emirate's population is 2,003,170 (2011). A water creek known as Khour-Dubai, 10 Kilometres long, dividing the town into two divisions, penetrates Dubai City. The Southern division, known as Bur-Dubai, comprises the Ruler's office, head offices and major companies, banks, custom, port, broadcast station and postal authority. The most significant landmarks are the Dubai World Trade Centre, the Zoo and Al-Jumeirah Coast Park.\n\nThe Northern division, known as Diera, is the centre of business and tourism and comprises most shops, markets, schools, hotels, clubs and Dubai International Airport. Al-Maktoum and Al-Garhoud Bridges and Al-Shindagah Tunnel, which passes under the creek, link the two divisions.\n\nJebel Ali area is considered one of the most significant industrial and commercial areas in the whole country. It has the largest free trade zone in the Middle East.\n\nDue to its location, Dubai has become a connecting link between the West and the Indian subcontinent, the Far East and Africa since time immemorial. Traditional Arab hospitality complemented by a highly sophisticated infrastructure have contributed to a perfect atmosphere for the development of tourism. Dubai is endowed with an extensive coastline, sandy beaches and varied landscape where a wide variety of activities can be indulged, ranging from powerboat races to sand skiing. Manicured golf courses provide ready enjoyment and for the less active, shopping opportunities abound. In addition, the country's deep-rooted cultural heritage, accessible in the many cultural centres, has been a powerful attraction for tourists. Dubai has also become a much sought after venue for conferences, regional and international exhibitions and major sports events.",
+      "image_url": "images/04_dubai.jpg",
+      "country": null,
+      "location": {
+        "latitude": 25.26452,
+        "longitude": 55.311667
+      }
+    },
+    {
+      "id": 5,
+      "name": "Edinburgh",
+      "description": "Edinburgh, the capital of Scotland is situated on Scotland's East Coast on the south side of the Firth Of Forth. Home of the Scottish parliament, Edinburgh is enriched with culture, fine architecture and hosts of one of the most prestigious universities in the United Kingdom, The University of Edinburgh. The most well known attractions are Edinburgh Castle, the Royal Mile, the Holyrood Palace and The National Gallery of Scotland. With a population of 435,790 in 2005, Edinburgh is Scotland's second largest city after Glasgow. \n\nThe historical centre of Edinburgh is divided into two parts by the Gardens of Princes Street. These gardens were originally marshlands, and can still be seen as such on earlier paintings of the city. To the south of these gardens is the old city, dominated by the world famous Edinburgh castle, situated on an extinct volcano. The castle looks down on the shopping district of the city, Princes Street, the beginning of the Royal Mile. To the north of the gardens is the New city where you will find modern architecture such as the Scottish parliament buildings and The National Gallery of Scotland. To the west of the castle is the financial district, where the banks and insurance companies fuel the hub of Edinburgh's economy. The West of the city is also home to Edinburgh Zoo. \n\nEach summer, the city comes alive with one of the world's largest festivals, the Edinburgh Festival. The three week long event held in August is enjoyed by nearly a million people each year and boasts of wealth of cultural delights including art, theatre, opera, music and dance as well as the traditional Military Tattoo. The cities streets are filled again for the world famous street party, Hogmanay. These New Year's celebrations in Edinburgh take place from December 31 until January 2.",
+      "image_url": "images/05_edinburgh.jpg",
+      "country": null,
+      "location": {
+        "latitude": 55.95,
+        "longitude": -3.2
+      }
+    },
+    {
+      "id": 6,
+      "name": "Florence",
+      "description": "So many lookers in such a good-looking city! Naked like Michelangelo’s David or rugged up in the latest winter fashion by their own world-class designers, Florentines and their city never fail to impress. Already in need of oxygen after admiring their art, visitors are mesmerised by the vision of locals at aperitivo time, effortlessly strutting, flirting and evidently enjoying life. At times it seems nothing much has changed since the days of the Medici.\n\nOf course much has changed. Florence’s short-lived stint as capital of Italy in 1865 was like a shot of adrenaline. The city bulldozed, constructed, rearranged avenues, wiped out whole quarters and tore down the medieval walls. And so the scene was set for the modern regional capital of Tuscany. Along the broad viali (avenues) that encircle old Florence a confusion of endless traffic tears around in chaotic style. Horns honk and brakes squeal as Florentines dart in and out of lanes in search of a break in the traffic. Ignorant of fear, motorini (moped) riders dash in and around larger vehicles, as if protected by some divine force.",
+      "image_url": "images/06_florence.jpg",
+      "country": null,
+      "location": {
+        "latitude": 43.7666667,
+        "longitude": 11.25
+      }
+    },
+    {
+      "id": 7,
+      "name": "Hong Kong",
+      "description": "Occupied by the UK in 1841, Hong Kong was formally ceded by China the following year; various adjacent lands were added later in the 19th century. Pursuant to an agreement signed by China and the UK on 19 December 1984, Hong Kong became the Hong Kong Special Administrative Region (SAR) of the People's Republic of China on 1 July 1997. In this agreement, China promised that, under its \"one country, two systems\" formula, China's socialist economic system would not be imposed on Hong Kong and that Hong Kong would enjoy a high degree of autonomy in all matters except foreign and defense affairs for the next 50 years.",
+      "image_url": "images/07_hong_kong.jpg",
+      "country": null,
+      "location": {
+        "latitude": 22.278333,
+        "longitude": 114.158889
+      }
+    },
+    {
+      "id": 8,
+      "name": "London",
+      "description": "London was founded as a communication center by the Romans shortly after they invaded Britain in 43 AD. Londinium, as it was called then, was a little village on the Thames., on the route to the provincial capital in eastern England. The Romans built a bridge across Thames on that route, the first bridge on the Thames near the little village. London had narrow, congested streets lined with tiny shops and houses built of wood and plaster back then. Even the London Bridge, which was considerably more than just a river crossing, had this tendency of narrow, crowded spaces. Therefore, a new stone bridge was built in 1176 to replace the old one. The city of London grew, and so did its population; by 1600 there were 200.000 souls, by the end of the 17th century shot up to 575.000, surpassing Paris as the largest city in Europe. Thus, London became the biggest city in Europe. It also became a cultural center , the center of the English cultural Renaissance, with major figures as Christopher Marlowe, Ben Jonson, William Shakespeare. London was Britain's economic powerhouse and the center of a burgeoning empire.\n\nThe city continued to grow and develop to what we see today, always combining the past with the present. In fact, that's what I think of when I think of London: a perfect binding of the past and the present. I think of the Big Ben, the Houses of parliament, 10 Downing Street, the Tower Bridge, the Great Fire, Barbican Arts Center, parks, Nelson's statue in Trafalgar square, the wax museum, Buckingham palace, the double deckers, the black cabs and, last but not the least, rain.\n\nThe Houses of Parliament, also called the Palace of Westminster, range along the Thames with Victoria Tower at one end and Big Ben, the famous bell in the Clock Tower, at the other. Westminster Abbey, built in Gothic style, has been the scene of the coronation of sovereigns from William the Conqueror to Elizabeth II. Buckingham Palace was made the official residence of the Sovereign by Queen Victoria. The Royal Guards change at 11.30 every day much to the delight of the tourists. Sir Christopher Wren's baroque masterpiece known as St. Paul's Cathedral was built after the Great Fire in 1066. The Duke of Wellington, Wren himself and Nelson are buried here. Lord Nelson's statue dominates Trafalgar Square, a big square in the center of London named in commemoration of a great English naval victory. People and especially pigeons gather here to see the fountains, the big lions and the statue of the victorious Admiral. The National Gallery, situated on the north side of Trafalgar Square, houses one of the richest collection of paintings, most Renaissance and Impressionist works. Madame Tussaud's exhibits wax models instead, models of famous historical characters, film and sports starts, Royalty statesmen. A more conventional museum is the British Museum, which shows the works of man from prehistoric times to the present day. There are permanent displays of antiquities from Egypt, Western Asia, Greece and Rome. It also includes one of the most famous libraries in the world. But there isn't much excitement in the British Museum, for fun and entertainment one could always go to the Barbican Arts Center, a good example of modern architecture. And after the sunset, there are dozens of theatres just a few minutes walk from Piccadilly Circus (West End theatres), and so is the world famous Covent Garden, home of the Royal Opera. For those who like discos and nightclubs, they can find them near Leicester Square, open till late.\n\nThe conclusion remains the same.. London is a perfect binding of the past and the present, a city with so many places to visit that one couldn't find the time to view them all. Samuel Johnson was right when he said that when someone is tired of London he is tired of life.",
+      "image_url": "images/08_london.jpg",
+      "country": null,
+      "location": {
+        "latitude": 51.5084153,
+        "longitude": -0.1255327
+      }
+    },
+    {
+      "id": 9,
+      "name": "Melbourne",
+      "description": "Melbourne is the capital and most populous city in the state of Victoria, and the second most populous city in Australia. The Melbourne City Centre is the hub of the greater metropolitan area and the Census statistical division—of which \"Melbourne\" is the common name. Melbourne's metropolitan area has a population of 4.25 million, growing the fastest in numerical terms and fifth fastest in percentage terms since the previous year. Inhabitants of Melbourne are called Melburnians. The metropolis is located on the large natural bay known as Port Phillip, with the city centre positioned on the estuary of the Yarra River (at the northernmost point of the bay). The metropolitan area then extends south from the city centre, along the eastern and western shorelines of Port Phillip, and expands into the hinterland. The city centre is situated in the municipality known as the City of Melbourne. The metropolitan area consists of a further 30 municipalities.",
+      "image_url": "images/09_melbourne.jpg",
+      "country": null,
+      "location": {
+        "latitude": -37.8139966,
+        "longitude": 144.9633179
+      }
+    },
+    {
+      "id": 10,
+      "name": "Moscow",
+      "description": "Moscow is the capital city and the most populous federal subject of Russia. The city is a major political, economic, cultural and scientific center in Russia and in Europe. According to Forbes 2011, Moscow has the largest community of billionaires in the world. Moscow is the northernmost megacity on Earth, the most populous city in Europe, and the 6th largest city proper in the world. It's also the largest city in Russia with a population, according to the 2010 Census, of 11,503,501. By its territorial expansion on July 1, 2012 southwest into the Moscow Oblast, the capital increased its area 2.5 times; from about 1,000 square kilometers (390 sq mi) up to 2,500 square kilometers (970 sq mi), and gained additional population of 230,000 people.\n\nMoscow is situated on the Moskva River in the Central Federal District of European Russia. In the course of its history the city has served as the capital of a progression of states, from the medieval Grand Duchy of Moscow and the subsequent Tsardom of Russia to the Soviet Union. Moscow is the site of the Moscow Kremlin, an ancient fortress that is today the residence of the Russian president. The Kremlin is also one of several World Heritage Sites in the city. Both chambers of the Russian parliament (the State Duma and the Federation Council) also sit in Moscow.\n\nThe city is served by an extensive transit network, which includes four international airports, nine railway terminals, and one of the deepest underground metro systems in the world, the Moscow Metro, third to Tokyo and Seoul in terms of passenger numbers. It is recognized as one of the city's landmarks due to the rich and varied architecture of its 188 stations.",
+      "image_url": "images/10_moscow.jpg",
+      "country": null,
+      "location": {
+        "latitude": 55.7522222,
+        "longitude": 37.6155548
+      }
+    },
+    {
+      "id": 11,
+      "name": "New York",
+      "description": "New York is the most populous city in the United States and the center of the New York Metropolitan Area, one of the most populous urban agglomerations in the world. The city is referred to as New York City or the City of New York to distinguish it from the State of New York, of which it is a part. A global power city, New York exerts a significant impact upon commerce, finance, media, art, fashion, research, technology, education, and entertainment. The home of the United Nations Headquarters, New York is an important center for international diplomacy and has been described as the cultural capital of the world.\n\nLocated on one of the world's largest natural harbors, New York City consists of five boroughs, each of which is a county of New York State. The five boroughs—The Bronx, Brooklyn, Manhattan, Queens, and Staten Island—were consolidated into a single city in 1898. With a Census-estimated 2012 population of 8,336,697 distributed over a land area of just 302.64 square miles (783.8 km2), New York is the most densely populated major city in the United States. As many as 800 languages are spoken in New York, making it the most linguistically diverse city in the world. The New York City Metropolitan Area's population is the United States' largest, with 18.9 million people distributed over 6,720 square miles (17,400 km2), and is also part of the most populous combined statistical area in the United States, containing 22.2 million people as of 2011.",
+      "image_url": "images/11_new_york.jpg",
+      "country": null,
+      "location": {
+        "latitude": 40.7142691,
+        "longitude": -74.0059738
+      }
+    },
+    {
+      "id": 12,
+      "name": "Paris",
+      "description": "Paris is the capital and most populous city of France. It is situated on the river Seine, in the north of the country, at the heart of the Île-de-France region. Within its administrative limits (the 20 arrondissements), Paris has a population of about 2,230,000, and its metropolitan area is one of the largest population centres in Europe, with more than 12 million inhabitants, who are referred to as Parisians.\n\nAn important settlement for more than two millennia, Paris had become, by the 12th century, one of Europe's foremost centres of learning and the arts and was the largest city in the Western world until the turn of the 18th century. Paris is today one of the world's leading business and cultural centres and its influences in politics, education, entertainment, media, science, and the arts all contribute to its status as one of the world's major global cities.\n\nParis and the Paris region account for more than 30% of the gross domestic product of France and have one of the largest city GDPs in the world, with €607 billion (US$845 billion) in 2011. Considered as green and highly liveable, the city and its region are the world's leading tourism destination, hosting four UNESCO World Heritage Sites and many international organizations, including UNESCO and the European Space Agency.",
+      "image_url": "images/12_paris.jpg",
+      "country": null,
+      "location": {
+        "latitude": 48.85341,
+        "longitude": 2.3487999
+      }
+    },
+    {
+      "id": 13,
+      "name": "Prague",
+      "description": "Prague is the capital and largest city of the Czech Republic. It is the fourteenth-largest city in the European Union. It is also the historical capital of Bohemia proper. Situated in the north-west of the country on the Vltava river, the city is home to about 1.3 million people, while its larger urban zone is estimated to have a population of nearly 2 million. The city has a temperate oceanic climate, with warm summers and chilly winters.\n\nPrague has been a political, cultural, and economic centre of central Europe with waxing and waning fortunes during its 1,100-year existence. Founded during the Romanesque and flourishing by the Gothic and Renaissance eras, Prague was not only the capital of the Czech state, but also the seat of two Holy Roman Emperors and thus also the capital of the Holy Roman Empire. It was an important city to the Habsburg Monarchy and its Austro-Hungarian Empire and after World War I became the capital of Czechoslovakia. The city played major roles in the Protestant Reformation, the Thirty Years' War, and in 20th-century history, during both World Wars and the post-war Communist era.\n\nPrague is home to a number of famous cultural attractions, many of which survived the violence and destruction of 20th century Europe. Main attractions include the Prague Castle, the Charles Bridge, Old Town Square, the Jewish Quarter, the Lennon Wall, and Petřín hill. Since 1992, the extensive historic centre of Prague has been included in the UNESCO list of World Heritage Sites.\n\nThe city boasts more than ten major museums, along with numerous theatres, galleries, cinemas, and other historical exhibits. A modern public transportation system connects the city. Also, it is home to a wide range of public and private schools, including Charles University. Prague is classified as a Beta+ global city according to GaWC studies, comparable to Berlin, Rome, or Houston. Its rich history makes it a popular tourist destination, and the city receives more than 4.1 million international visitors annually, as of 2009. In 2011, Prague was the sixth-most-visited city in Europe.",
+      "image_url": "images/13_prague.jpg",
+      "country": null,
+      "location": {
+        "latitude": 50.0878368,
+        "longitude": 14.4241323
+      }
+    },
+    {
+      "id": 14,
+      "name": "Rio De Janeiro",
+      "description": "Rio de Janeiro, commonly referred to simply as Rio, is the capital city of the State of Rio de Janeiro, the second largest city of Brazil, and the third largest metropolitan area and agglomeration in South America, boasting approximately 6.3 million people within the city proper, making it the 6th largest in the Americas, and 26th in the world. Rio de Janeiro has become a home of a World Heritage Site named \"Rio de Janeiro: Carioca Landscapes between the Mountain and the Sea\", as granted by UNESCO on 1 July 2012 in the category Cultural Landscape.\n\nThe city was the capital of Brazil for nearly two centuries, from 1763 to 1815 during the Portuguese colonial era, 1815 to 1821 as the capital of the United Kingdom of Portugal, Brazil and Algarves, and 1822 to 1960 as an independent nation. Rio is nicknamed the Cidade Maravilhosa or \"Marvelous City\".\n\nRio de Janeiro represents the second largest GDP in the country (and 30th largest in the world in 2008), estimated at about R$343 billion (IBGE/2008) (nearly US$201 billion), and is headquarters to two of Brazil's major companies—Petrobras and Vale, and major oil companies and telephony in Brazil, besides the largest conglomerate of media and communications companies in Latin America, the Globo Organizations. The home of many universities and institutes, it is the second largest center of research and development in Brazil, accounting for 17% of national scientific production—according to 2005 data.\n\nRio de Janeiro is one of the most visited cities in the southern hemisphere and is known for its natural settings, carnival celebrations, samba, Bossa Nova, balneario beaches such as Barra da Tijuca, Copacabana, Ipanema, and Leblon. Some of the most famous landmarks in addition to the beaches include the giant statue of Christ the Redeemer (\"Cristo Redentor\") atop Corcovado mountain, named one of the New Seven Wonders of the World; Sugarloaf mountain (Pão de Açúcar) with its cable car; the Sambódromo, a permanent grandstand-lined parade avenue which is used during Carnival; and Maracanã Stadium, one of the world's largest football stadiums.",
+      "image_url": "images/14_rio_de_janeiro.jpg",
+      "country": null,
+      "location": {
+        "latitude": -22.9027778,
+        "longitude": -43.2075005
+      }
+    },
+    {
+      "id": 15,
+      "name": "Rome",
+      "description": "Rome is a city and special comune (\"Roma Capitale\") in Italy. Rome is the capital of Italy and also of Lazio (Latin: Latium). With 2.8 million residents in 1,285.3 km2 (496.3 sq mi), it is also the country's largest and most populated comune and fifth-most populous city in the European Union by population within city limits. Between 3.2 and 3.8 million people live in the Rome urban and metropolitan area. The city is located in the central-western portion of the Italian Peninsula, on the Tiber within the Lazio region of Italy. Rome is referred to as \"The Eternal City\", a notion expressed by ancient Roman poets and writers.\n\nRome's history spans more than two and a half thousand years, since its founding in 753 BC. It is one of the oldest cities in Europe. In the ancient world it was successively the capital city of the Roman Kingdom, the Roman Republic and the Roman Empire, and is regarded as one of the birthplaces of western civilization. Since the 1st century AD, Rome has been considered the seat of the Papacy and in the 8th century it became the capital of the Papal States, which lasted until 1870. In 1871 Rome became the capital of the Kingdom of Italy, and in 1946 that of the Italian Republic.\n\nAfter the Middle Ages, Rome was ruled by popes such as Alexander VI and Leo X, who transformed the city into one of the major centers of the Italian Renaissance, along with Florence. The current version of St Peter's Basilica was built and the Sistine Chapel was painted by Michelangelo. Famous artists and architects, such as Bramante, Bernini and Raphael resided for some time in Rome, contributing to its Renaissance and Baroque architecture.\n\nRome has been ranked by GaWC in 2010 as a beta+ world city, as well as the 28th most important global city. In 2007, Rome was the 11th-most-visited city in the world, 3rd most visited in the European Union, and the most popular tourist attraction in Italy. The city is one of Europe's and the world's most successful city \"brands\", both in terms of reputation and assets. Its historic centre is listed by UNESCO as a World Heritage Site. Monuments and museums such as the Vatican Museums and the Colosseum are among the world's most visited tourist destinations with both locations receiving millions of tourists a year. Rome hosted the 1960 Summer Olympics.",
+      "image_url": "images/15_rome.jpg",
+      "country": null,
+      "location": {
+        "latitude": 41.9,
+        "longitude": 12.4833336
+      }
+    },
+    {
+      "id": 16,
+      "name": "San Francisco",
+      "description": "San Francisco, officially the City and County of San Francisco, is the leading financial and cultural center of Northern California and the San Francisco Bay Area.\n\nThe only consolidated city-county in California, San Francisco encompasses a land area of about 46.9 square miles (121 km2) on the northern end of the San Francisco Peninsula, giving it a density of about 17,179 people per square mile (6,632 people per km2). It is the most densely settled large city (population greater than 200,000) in the state of California and the second-most densely populated major city in the United States after New York City. San Francisco is the fourth most populous city in California, after Los Angeles, San Diego and San Jose, and the 14th most populous city in the United States—with a population of 805,235 as of the 2010 Census. The city is also the financial and cultural hub of the larger San Jose-San Francisco-Oakland metropolitan area, with a population of 8.4 million.\n\nSan Francisco (Spanish for \"Saint Francis\") was founded on June 29, 1776, when colonists from Spain established a fort at the Golden Gate and a mission named for St. Francis of Assisi a few miles away. The California Gold Rush of 1849 brought rapid growth, making it the largest city on the West Coast at the time. Due to the growth of its population, San Francisco became a consolidated city-county in 1856. After three-quarters of the city was destroyed by the 1906 earthquake and fire, San Francisco was quickly rebuilt, hosting the Panama-Pacific International Exposition nine years later. During World War II, San Francisco was the port of embarkation for service members shipping out to the Pacific Theater. After the war, the confluence of returning servicemen, massive immigration, liberalizing attitudes, and other factors led to the Summer of Love and the gay rights movement, cementing San Francisco as a center of liberal activism in the United States.\n\nToday, San Francisco is one of the top tourist destinations in the world, and is renowned for its cool summers, fog, steep rolling hills, eclectic mix of architecture, and landmarks including the Golden Gate Bridge, cable cars, the former prison on Alcatraz Island, and its Chinatown district. It is also a primary banking and finance center.",
+      "image_url": "images/16_san_francisco.jpg",
+      "country": null,
+      "location": {
+        "latitude": 37.7749295,
+        "longitude": -122.4194183
+      }
+    },
+    {
+      "id": 17,
+      "name": "Shanghai",
+      "description": "Shanghai is the largest city by population in the People's Republic of China (PRC) and the largest city proper by population in the world. It is one of the four province-level municipalities of the PRC, with a total population of over 23 million as of 2010. It is a global city, with influence in commerce, culture, finance, media, fashion, technology, and transport. It is a major financial center and the busiest container port in the world.\n\nLocated in the Yangtze River Delta in East China, Shanghai sits at the mouth of the Yangtze River in the middle portion of the Chinese coast. The municipality borders the provinces of Jiangsu and Zhejiang to the north, south and west, and is bounded to the east by the East China Sea.\n\nFor centuries a major administrative, shipping, and trading town, Shanghai grew in importance in the 19th century due to European recognition of its favorable port location and economic potential. The city was one of several opened to foreign trade following the British victory over China in the First Opium War and the subsequent 1842 Treaty of Nanking which allowed the establishment of the Shanghai International Settlement. The city then flourished as a center of commerce between east and west, and became the undisputed financial hub of the Asia Pacific in the 1930s. However, with the Communist Party takeover of the mainland in 1949, trade was reoriented to focus on socialist countries, and the city's global influence declined. In the 1990s, the economic reforms introduced by Deng Xiaoping resulted in an intense re-development of the city, aiding the return of finance and foreign investment to the city.\n\nShanghai is a popular tourist destination renowned for its historical landmarks such as The Bund, City God Temple and Yu Garden, as well as the extensive and growing Lujiazui skyline. It has been described as the \"showpiece\" of the booming economy of mainland China.",
+      "image_url": "images/17_shanghai.jpg",
+      "country": null,
+      "location": {
+        "latitude": 31.2222222,
+        "longitude": 121.4580536
+      }
+    },
+    {
+      "id": 18,
+      "name": "Sydney",
+      "description": "Sydney is the state capital of New South Wales and the most populous city in Australia. It is on Australia's south-east coast, on the Tasman Sea. In June 2010 the greater metropolitan area had an approximate population of 4.6 million people. Inhabitants of Sydney are called Sydneysiders, comprising a cosmopolitan and international population.\n\nThe site of the first British colony in Australia, Sydney was established in 1788 at Sydney Cove by Arthur Phillip, commodore of the First Fleet, as a penal colony. The city is built on hills surrounding Port Jackson which is commonly known as Sydney Harbour, where the iconic Sydney Opera House and the Harbour Bridge feature prominently. The hinterland of the metropolitan area is surrounded by national parks, and the coastal regions feature many bays, rivers, inlets and beaches including the famous Bondi Beach and Manly Beach. Within the city are many notable parks, including Hyde Park an d the Royal Botanic Gardens.\n\nSydney is a high ranking world city and has hosted multiple major international sporting events, including the 1938 British Empire Games (now known as the Commonwealth Games) and the 2000 Summer Olympics. The main airport serving Sydney is Sydney Airport and its main port is Port Botany.",
+      "image_url": "images/18_sydney.jpg",
+      "country": null,
+      "location": {
+        "latitude": -33.86785,
+        "longitude": 151.2073212
+      }
+    },
+    {
+      "id": 19,
+      "name": "Singapore",
+      "description": "Singapore officially the Republic of Singapore, is a Southeast Asian island city-state off the southern tip of the Malay Peninsula, 137 kilometres (85 mi) north of the equator. An island country made up of 63 islands, it is separated from Malaysia by the Straits of Johor to its north and from Indonesia's Riau Islands by the Singapore Strait to its south. The country is highly urbanised with very little primary rainforest remaining, although more land is being created for development through land reclamation.\n\nPart of various local empires since being inhabited in the 2nd century AD, Singapore hosted a trading post of the East India Company in 1819 with permission from the Johor Sultanate. The British obtained sovereignty over the island in 1824 and Singapore became one of the British Straits Settlements in 1826. Occupied by the Japanese in World War II, Singapore declared independence, uniting with other former British territories to form Malaysia in 1963, although it was separated from Malaysia two years later. Since then it has had a massive increase in wealth, and is one of the Four Asian Tigers.",
+      "image_url": "images/19_singapore.jpg",
+      "country": null,
+      "location": {
+        "latitude": 1.289545,
+        "longitude": 103.849972
+      }
+    },
+    {
+      "id": 20,
+      "name": "Tokyo",
+      "description": "Tokyo, officially Tokyo Metropolis, is one of the 47 prefectures of Japan. Tokyo is the capital of Japan, the center of the Greater Tokyo Area, and the largest metropolitan area in the world. It is the seat of the Japanese government and the Imperial Palace, and the home of the Japanese Imperial Family. Tokyo is in the Kantō region on the southeastern side of the main island Honshu and includes the Izu Islands and Ogasawara Islands. Tokyo Metropolis was formed in 1943 from the merger of the former Tokyo Prefecture and the city of Tokyo.\n\nTokyo is often thought of as a city but is commonly referred to as a \"metropolitan prefecture\". The Tokyo metropolitan government administers the 23 Special Wards of Tokyo (each governed as an individual city), which cover the area that was formerly the City of Tokyo before it merged and became the subsequent metropolitan prefecture. The metropolitan government also administers 39 municipalities in the western part of the prefecture and the two outlying island chains. The population of the special wards is over 9 million people, with the total population of the prefecture exceeding 13 million. The prefecture is part of the world's most populous metropolitan area with upwards of 35 million people and the world's largest urban agglomeration economy with a GDP of US$1.479 trillion at purchasing power parity, ahead of the New York metropolitan area in 2008. The city hosts 51 of the Fortune Global 500 companies, the highest number of any city.",
+      "image_url": "images/20_tokyo.jpg",
+      "country": null,
+      "location": {
+        "latitude": 35.6895266,
+        "longitude": 139.6916809
+      }
+    },
+    {
+      "id": 21,
+      "name": "Toronto",
+      "description": "Toronto is the largest city in Canada and the provincial capital of Ontario. It is located in Southern Ontario on the northwestern shore of Lake Ontario. Toronto is a relatively modern city. Its history begins in the late 18th century, when the British Crown purchased its land from the Mississaugas of the New Credit. The British established a settlement there, called the Town of York, which its lieutenant governor, John Graves Simcoe, designated as the capital of Upper Canada. The city was ransacked in the Battle of York during the War of 1812. In 1834, York was incorporated as a city and renamed Toronto. It was damaged in two huge fires, in 1849 and 1904. Over the years, Toronto has several times expanded its borders through amalgamation with surrounding municipalities, most recently in 1998.\n\nThe city has 2.6 million residents, according to the 2011 Census. It is currently the fifth most populous city in North America. The census metropolitan area (CMA) had a population of 5,583,064, and the Greater Toronto Area (GTA) had a population of 6,054,191 in the 2011 Census. Toronto is at the heart of the Greater Toronto Area, and of the densely populated region in Southern Ontario known as the Golden Horseshoe. Its cosmopolitan and international population reflects its role as an important destination for immigrants to Canada. Toronto is one of the world's most diverse cities by percentage of non-native-born residents, with about 49% of the population born outside Canada. As Canada's commercial capital, it is home to the Toronto Stock Exchange and some of the nation's largest banks. Toronto will host the 2015 Pan American Games.",
+      "image_url": "images/21_toronto.jpg",
+      "country": null,
+      "location": {
+        "latitude": 43.7001138,
+        "longitude": -79.4163055
+      }
+    },
+    {
+      "id": 22,
+      "name": "Vienna",
+      "description": "Vienna is the capital and largest city of Austria, and one of the nine states of Austria. Vienna is Austria's primary city, with a population of about 1.731 million (2.4 million within the metropolitan area, more than 20% of Austria's population), and is by far the largest city in Austria, as well as its cultural, economic, and political centre. It is the 9th-largest city by population within city limits in the European Union. Until the beginning of the 20th century it was the largest German-speaking city in the world, and before the splitting of the Austro-Hungarian Empire in World War I the city had 2 million inhabitants. Vienna is host to many major international organizations, including the United Nations and OPEC. The city lies in the east of Austria and is close to the borders of the Czech Republic, Slovakia, and Hungary. These regions work together in a European Centrope border region. Along with nearby Bratislava, Vienna forms a metropolitan region with 3 million inhabitants. In 2001, the city centre was designated a UNESCO World Heritage Site.",
+      "image_url": "images/22_vienna.jpg",
+      "country": null,
+      "location": {
+        "latitude": 48.2084878,
+        "longitude": 16.372076
+      }
+    },
+    {
+      "id": 23,
+      "name": "Amsterdam",
+      "description": "Amsterdam is the largest city and the capital of the Netherlands. Its principal language is Dutch. The city's status as the capital of the nation is governed by the constitution. Amsterdam has a population of 820,256 within city limits, an urban population of 1,209,419 and a metropolitan population of 2,289,762. The city is located in the province of North Holland in the west of the country. It comprises the northern part of the Randstad, one of the larger conurbations in Europe, with a population of approximately 7 million.\n\nAmsterdam's name is derived from Amstelredamme, indicative of the city's origin: a dam in the river Amstel. Settled as a small fishing village in the late 12th century, Amsterdam became one of the most important ports in the world during the Dutch Golden Age, a result of its innovative developments in trade. During that time, the city was the leading center for finance and diamonds. In the 19th and 20th centuries, the city expanded, and many new neighborhoods and suburbs were formed. The 17th-century canals of Amsterdam (in Dutch: 'grachtengordel'), located in the heart of Amsterdam, were added to the UNESCO World Heritage List in July 2010.\n\nAs the commercial capital of the Netherlands and one of the top financial centres in Europe, Amsterdam is considered an alpha world city by the Globalization and World Cities (GaWC) study group. The city is also the cultural capital of the Netherlands. Many large Dutch institutions have their headquarters there, and 7 of the world's top 500 companies, including Philips and ING, are based in the city. In 2010, Amsterdam was ranked 13th globally on quality of living by Mercer, and previously ranked 3rd in innovation by 2thinknow in the Innovation Cities Index 2009.",
+      "image_url": "images/23_amsterdam.jpg",
+      "country": null,
+      "location": {
+        "latitude": 52.373084,
+        "longitude": 4.8999023
+      }
+    },
+    {
+      "id": 24,
+      "name": "Rotterdam",
+      "description": "Rotterdam is the second-largest city in the Netherlands and one of the largest ports in the world. Starting as a dam constructed in 1270 on the Rotte River, Rotterdam has grown into a major international commercial centre. Its strategic location at the Rhine-Meuse-Scheldt delta on the North Sea and at the heart of a massive rail, road, air and inland waterway distribution system extending throughout Europe is the reason that Rotterdam is often called the \"Gateway to Europe\".\n\nIn the province of South Holland, Rotterdam is in the west of Netherlands and the south of the Randstad. The population of the city was 616,250 on February 1, 2012. The population of the greater Rotterdam area, called \"Rotterdam-Rijnmond\" or just \"Rijnmond\", is approximately 1.3 million. The combined urban area of Rotterdam and The Hague is the 206th largest urban area in the world. One of Europe's most vibrant, multicultural cities, Rotterdam is known for its university (Erasmus), cutting-edge architecture, lively cultural life, striking riverside setting and maritime heritage. It is also known for the Rotterdam Blitz.\n\nThe largest port in Europe and one of the busiest ports in the world, the port of Rotterdam was the world's busiest port from 1962 to 2004, when it was surpassed by Shanghai. Rotterdam's commercial and strategic importance is based on its location near the mouth of the Nieuwe Maas (New Meuse), a channel in the delta formed by the Rhine and Meuse on the North Sea. These rivers lead directly into the centre of Europe, including the industrial Ruhr region.",
+      "image_url": "images/24_rotterdam.jpg",
+      "country": null,
+      "location": {
+        "latitude": 51.9225,
+        "longitude": 4.479167
+      }
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rl_item_id"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_item"
+        android:background="@drawable/shadow"
+        android:padding="20dp">
+
+        <ImageView
+            android:id="@+id/iv_icon_id"
+            android:layout_width="70dip"
+            android:layout_height="70dip"
+            android:layout_centerVertical="true"
+            android:background="@color/material_deep_teal_200"
+            android:contentDescription="@null"/>
+
+        <TextView
+            android:id="@+id/tv_name_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/iv_icon_id"
+            android:textIsSelectable="false"
+            android:textSize="24sp"
+            android:textStyle="bold"/>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/tv_container_text_id"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/shadow"
+        android:orientation="vertical">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_text_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="10dip"
+                    android:textColor="@android:color/black"
+                    android:textIsSelectable="false"/>
+
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+
+</LinearLayout>

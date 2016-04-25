@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <integer name="conf_server_connect_timeout_millisec">15000</integer>
+    <integer name="conf_server_read_timeout_millisec">15000</integer>
+    <string name="conf_server_url">http://azcltd.com/testTask/android</string>
+</resources>
