@@ -23,7 +23,7 @@ import java.util.ArrayList;
  */
 public class ExpandLayoutManager extends RecyclerView.LayoutManager {
 
-    private static final int TRANSITION_DURATION = 400;
+    private static final int TRANSITION_DURATION = 400;// todo make it configurable
 
     private int mAnchorPos;
     private boolean mIsOpen;
@@ -56,7 +56,7 @@ public class ExpandLayoutManager extends RecyclerView.LayoutManager {
         if (isOpen()) {
             return;
         }
-        detachAndScrapAttachedViews(recycler);
+        detachAndScrapAttachedViews(recycler);//todo replace with removeAndRecycle
         fill(recycler);
         mAnchorPos = 0;
     }
@@ -76,7 +76,7 @@ public class ExpandLayoutManager extends RecyclerView.LayoutManager {
         }
     }
 
-    public void openItem(final int pos) {
+    public void openItem(final int pos) {// todo refactor because after partial fill, you will need to scroll to item to find it, or force attach it
         if (mIgnoreOpenItem) {
             return;
         }
@@ -120,7 +120,7 @@ public class ExpandLayoutManager extends RecyclerView.LayoutManager {
         mAnimatorOpenSet.start();
     }
 
-    public void closeItem(final int pos) {
+    public void closeItem(final int pos) {// todo refactor because after partial fill, you will need to scroll to item to find it, or force attach it
         View viewToClose = null;
         final int childCount = getChildCount();
         for (int i = 0; i < childCount; i++) {
@@ -224,13 +224,13 @@ public class ExpandLayoutManager extends RecyclerView.LayoutManager {
 
     private void fill(final RecyclerView.Recycler recycler) {
         final View anchorView = getView();
-        detachAndScrapAttachedViews(recycler);
-        fillUp(anchorView, recycler);
-        fillDown(anchorView, recycler);
+        detachAndScrapAttachedViews(recycler);// todo replace with removeAndRecycle
+        fillUp(anchorView, recycler);// todo fill only visible elements
+        fillDown(anchorView, recycler);// todo fill only visible elements
         if (null == anchorView) {
             return;
         }
-        try {
+        try {//todo remove try/catch and debug the problem. what is anchorView element?
             recycler.recycleView(anchorView);
         } catch (final Exception ignored) {
         }
@@ -292,7 +292,7 @@ public class ExpandLayoutManager extends RecyclerView.LayoutManager {
         }
     }
 
-    private View getView() {
+    private View getView() {// todo what does this method do?
         final int childCount = getChildCount();
         final Rect mainRect = new Rect(0, 0, getWidth(), mItemSize * getItemCount());
         final int maxSquare = 0;
@@ -307,7 +307,7 @@ public class ExpandLayoutManager extends RecyclerView.LayoutManager {
             final boolean intersect = viewRect.intersect(mainRect);
             if (intersect) {
                 final int square = viewRect.width() * viewRect.height();
-                if (maxSquare < square) {
+                if (maxSquare < square) {//todo maxSquare is not assign
                     view = item;
                 }
             }

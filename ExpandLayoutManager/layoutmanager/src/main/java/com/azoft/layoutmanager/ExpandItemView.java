@@ -32,18 +32,18 @@ public class ExpandItemView extends RelativeLayout implements AnimationView {
     }
 
     private void init(final Context context) {
-        LayoutInflater.from(context).inflate(R.layout.info_item, this, true);
+        LayoutInflater.from(context).inflate(R.layout.info_item, this, true);// todo remove layout file from library project
 
         mItemView = findViewById(R.id.rl_item_id);
         mContainer = findViewById(R.id.tv_container_text_id);
-        mAnimationOpenSet.addListener(getAnimationListener());
+        mAnimationOpenSet.addListener(getAnimationListener());// todo create only one listener for both addListener methods
         mAnimationCloseSet.addListener(getAnimationListener());
         mAnimationOpenSet.setDuration(DURATION);
         mAnimationCloseSet.setDuration(DURATION);
 
         post(new Runnable() {
             @Override
-            public void run() {
+            public void run() {// todo why this is needed?
                 mContainer.setPivotY(0);
                 mContainer.setPivotX(mContainer.getWidth() * HALF);
                 mContainer.setRotationX(ANGLE);
@@ -67,7 +67,7 @@ public class ExpandItemView extends RelativeLayout implements AnimationView {
 
     public boolean isOpen() {
         return mIsOpen;
-    }
+    }//todo remove or add to interface
 
     private Animator.AnimatorListener getAnimationListener() {
         return new Animator.AnimatorListener() {
