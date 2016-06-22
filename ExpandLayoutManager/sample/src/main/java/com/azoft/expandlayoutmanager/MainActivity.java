@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -12,7 +13,6 @@ import android.widget.TextView;
 
 import com.azoft.expandlayoutmanager.data.CitiesResponse;
 import com.azoft.expandlayoutmanager.data.City;
-import com.azoft.layoutmanager.ExpandItemView;
 import com.azoft.layoutmanager.ExpandLayoutManager;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -31,8 +31,6 @@ import java.util.Random;
  */
 public class MainActivity extends AppCompatActivity {
 
-    private ExpandLayoutManager mLayoutManager;
-    private int mCurrentPosition;
     private final Gson mGson = new GsonBuilder().create();
 
     @Override
@@ -59,26 +57,26 @@ public class MainActivity extends AppCompatActivity {
         }
         final DataAdapter dataAdapter = new DataAdapter(citiesResponse.getCities());
         final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        mLayoutManager = new ExpandLayoutManager(getResources().getDimensionPixelSize(R.dimen.height_item));
-        recyclerView.setLayoutManager(mLayoutManager);
+//        mLayoutManager = new OldExpandLayoutManager(getResources().getDimensionPixelSize(R.dimen.height_item));
+        final ExpandLayoutManager layoutManager = new ExpandLayoutManager();
+        //noinspection ConstantConditions
+        recyclerView.setLayoutManager(layoutManager);
 
         recyclerView.setAdapter(dataAdapter);
         dataAdapter.setItemClickListener(new DataAdapter.OnItemClickListener() {
             @Override
             public void onItemClicked(final int pos) {
-                mCurrentPosition = pos;
-                mLayoutManager.actionItem(mCurrentPosition);
+                layoutManager.actionItem(pos);
             }
         });
-    }
 
-    @Override
-    public void onBackPressed() {
-        if (null == mLayoutManager || !mLayoutManager.isOpen()) {
-            super.onBackPressed();
-        } else {
-            mLayoutManager.closeItem(mCurrentPosition);
-        }
+        //noinspection ConstantConditions
+        findViewById(R.id.b_action).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+                layoutManager.actionItem(10);
+            }
+        });
     }
 
     private static final class DataAdapter extends RecyclerView.Adapter<DataAdapter.InfoViewHolder> {
@@ -103,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public InfoViewHolder onCreateViewHolder(final ViewGroup parent, final int position) {
-            return new InfoViewHolder(new ExpandItemView(parent.getContext()));
+            return new InfoViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.info_item, parent, false));
         }
 
         @Override
