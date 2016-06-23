@@ -5,19 +5,20 @@ import android.animation.ValueAnimator;
 import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.util.Pair;
 import android.view.View;
 import android.view.ViewGroup;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
 @SuppressWarnings("ClassWithTooManyMethods")
 public class ExpandLayoutManager extends RecyclerView.LayoutManager {
 
-    private static final int INVALID_POSITION = -1;
+    public static final int INVALID_POSITION = -1;
 
     private final LayoutHelper mLayoutHelper = new LayoutHelper();
 
@@ -25,6 +26,16 @@ public class ExpandLayoutManager extends RecyclerView.LayoutManager {
 
     private int mOpenItemPosition = INVALID_POSITION;
     private int mItemsCount;
+
+    private final ExpandModel mExpandModel;
+
+    public ExpandLayoutManager() {
+        this(new SimpleExpandModel());
+    }
+
+    public ExpandLayoutManager(final ExpandModel expandModel) {
+        mExpandModel = expandModel;
+    }
 
     @Override
     public RecyclerView.LayoutParams generateDefaultLayoutParams() {
@@ -62,33 +73,33 @@ public class ExpandLayoutManager extends RecyclerView.LayoutManager {
         if (0 > adapterPosition) {
             throw new IllegalArgumentException("adapter position can't be less then 0");
         }
-        final AnimationAction animationAction = new AnimationAction();
+        int collapsePosition = INVALID_POSITION;
+        int expandPosition = INVALID_POSITION;
         if (getOpenOrOpeningItemPosition() == adapterPosition) {
-            animationAction.mCollapsePosition = adapterPosition;
+            collapsePosition = adapterPosition;
         } else {
             if (isItemExpandOrExpanding()) {
-                animationAction.mCollapsePosition = getOpenOrOpeningItemPosition();
+                collapsePosition = getOpenOrOpeningItemPosition();
             }
-            animationAction.mExpandPosition = adapterPosition;
+            expandPosition = adapterPosition;
         }
-        mPendingActions.addAction(this, animationAction);
+        mPendingActions.addAction(this, AnimationAction.createdAction(expandPosition, collapsePosition));
     }
 
     public void expandItem(final int adapterPosition) {
         if (0 > adapterPosition) {
             throw new IllegalArgumentException("adapter position can't be less then 0");
         }
-        final AnimationAction animationAction = new AnimationAction();
+        int collapsePosition = INVALID_POSITION;
         if (isItemExpandOrExpanding()) {
             if (getOpenOrOpeningItemPosition() == adapterPosition) {
                 // nothing to do
                 return;
             } else {
-                animationAction.mCollapsePosition = getOpenOrOpeningItemPosition();
+                collapsePosition = getOpenOrOpeningItemPosition();
             }
         }
-        animationAction.mExpandPosition = adapterPosition;
-        mPendingActions.addAction(this, animationAction);
+        mPendingActions.addAction(this, AnimationAction.createdAction(adapterPosition, collapsePosition));
     }
 
     public void collapseItem(final int adapterPosition) {
@@ -99,9 +110,7 @@ public class ExpandLayoutManager extends RecyclerView.LayoutManager {
             // nothing to do
             return;
         }
-        final AnimationAction animationAction = new AnimationAction();
-        animationAction.mCollapsePosition = adapterPosition;
-        mPendingActions.addAction(this, animationAction);
+        mPendingActions.addAction(this, AnimationAction.createCollapseAction(adapterPosition));
     }
 
     public int getOpenOrOpeningItemPosition() {
@@ -130,11 +139,11 @@ public class ExpandLayoutManager extends RecyclerView.LayoutManager {
 
     @Override
     public int scrollVerticallyBy(final int dy, @NonNull final RecyclerView.Recycler recycler, @NonNull final RecyclerView.State state) {
-        return scrollBy(dy, recycler, state, true);
+        return scrollBy(dy, recycler, state);
     }
 
     @CallSuper
-    protected int scrollBy(final int diff, @NonNull final RecyclerView.Recycler recycler, @NonNull final RecyclerView.State state, final boolean fromUser) {
+    protected int scrollBy(final int diff, @NonNull final RecyclerView.Recycler recycler, @NonNull final RecyclerView.State state) {
         if (0 == getChildCount()) {
             return 0;
         }
@@ -148,18 +157,7 @@ public class ExpandLayoutManager extends RecyclerView.LayoutManager {
         } else {
             resultScroll = diff;
         }
-/*
-        } else {
-            if (0 > mLayoutHelper.mScrollOffset + diff) {
-                resultScroll = -mLayoutHelper.mScrollOffset; //to make it 0
-            } else {
-                for (int i = 0; i < mItemsCount; ++i) {
-                    maxScroll += mPendingActions.getItemSize(i, mLayoutHelper.mDecoratedChildHeight, getHeightNoPadding());
-                    if ()
-                }
-            }
-        }
-*/
+
         if (0 != resultScroll) {
             mLayoutHelper.mScrollOffset += resultScroll;
             fillData(recycler, state, false);
@@ -217,7 +215,6 @@ public class ExpandLayoutManager extends RecyclerView.LayoutManager {
     @SuppressWarnings("MethodWithTooManyParameters")
     private void fillChildItem(final int start, final int top, final int end, final int bottom, @NonNull final LayoutOrder layoutOrder, @NonNull final RecyclerView.Recycler recycler, final boolean childMeasuringNeeded) {
         final View view = bindChild(layoutOrder.mItemAdapterPosition, recycler, childMeasuringNeeded);
-        Log.e("!!!!!!!!", "layout item: " + layoutOrder.mItemAdapterPosition + "; position: " + top + ", " + end);
         view.layout(start, top, end, bottom);
     }
 
@@ -226,21 +223,12 @@ public class ExpandLayoutManager extends RecyclerView.LayoutManager {
 
         mLayoutHelper.clearItems();
 
-        int firstRender = 0;
-        int tmpScroll = -mLayoutHelper.mScrollOffset;
-        for (int i = 0; i < mItemsCount; ++i) {
-            firstRender = i;
-            final int itemHeight = mPendingActions.getItemSize(i, mLayoutHelper.mDecoratedChildHeight, getHeightNoPadding());
-            if (0 < tmpScroll + itemHeight) {
-                break;
-            }
-            tmpScroll += itemHeight;
-        }
+        final Pair<Integer, Integer> firstRenderData = generateFirstRenderData();
 
         if (INVALID_POSITION == mOpenItemPosition) {
-            int top = tmpScroll;
+            int top = firstRenderData.second;
 
-            for (int i = firstRender; i < mItemsCount - 1; ++i) {
+            for (int i = firstRenderData.first; i < mItemsCount - 1; ++i) {
                 final int itemHeight = mPendingActions.getItemSize(i, mLayoutHelper.mDecoratedChildHeight, getHeightNoPadding());
                 final int bottom = top + itemHeight;
 
@@ -255,7 +243,7 @@ public class ExpandLayoutManager extends RecyclerView.LayoutManager {
             final int top = 0;
             final int bottom = getHeightNoPadding();
 
-            mLayoutHelper.createItem(firstRender, top, bottom);
+            mLayoutHelper.createItem(firstRenderData.first, top, bottom);
         }
     }
 
@@ -280,9 +268,65 @@ public class ExpandLayoutManager extends RecyclerView.LayoutManager {
         }
     }
 
-    private int calculateScrollForSelectingPosition(final int itemPosition, final RecyclerView.State state) {
-        final int fixedItemPosition = itemPosition < state.getItemCount() ? itemPosition : state.getItemCount() - 1;
-        return fixedItemPosition * mLayoutHelper.mDecoratedChildHeight;
+    private int calculateScrollForSelectingPosition(final int scrollToItemPosition, final RecyclerView.State state) {
+        final int fixedItemPosition = scrollToItemPosition < state.getItemCount() ? scrollToItemPosition : state.getItemCount() - 1;
+
+        int tmpScroll = fixedItemPosition * mLayoutHelper.mDecoratedChildHeight;
+
+        if (null != mPendingActions.mExecutingAnimationAction) {
+            final List<Integer> includedItems = new ArrayList<>();
+            if (INVALID_POSITION != mPendingActions.mExecutingAnimationAction.mCollapsePosition) {
+                includedItems.add(mPendingActions.mExecutingAnimationAction.mCollapsePosition);
+            }
+            if (INVALID_POSITION != mPendingActions.mExecutingAnimationAction.mExpandPosition) {
+                includedItems.add(mPendingActions.mExecutingAnimationAction.mExpandPosition);
+            }
+            Collections.sort(includedItems);
+            for (final int itemPosition : includedItems) {
+                if (itemPosition >= fixedItemPosition) {
+                    break;
+                }
+                final int movingDiff = mPendingActions
+                        .getItemSize(itemPosition, mLayoutHelper.mDecoratedChildHeight, getHeightNoPadding()) - mLayoutHelper.mDecoratedChildHeight;
+                tmpScroll += movingDiff;
+            }
+        }
+
+        return tmpScroll;
+    }
+
+    private Pair<Integer, Integer> generateFirstRenderData() {
+        int firstRender = mLayoutHelper.mScrollOffset / mLayoutHelper.mDecoratedChildHeight;
+        int tmpScroll = firstRender * mLayoutHelper.mDecoratedChildHeight - mLayoutHelper.mScrollOffset;
+        if (null != mPendingActions.mExecutingAnimationAction) {
+            final List<Integer> includedItems = new ArrayList<>();
+            if (INVALID_POSITION != mPendingActions.mExecutingAnimationAction.mCollapsePosition) {
+                includedItems.add(mPendingActions.mExecutingAnimationAction.mCollapsePosition);
+            }
+            if (INVALID_POSITION != mPendingActions.mExecutingAnimationAction.mExpandPosition) {
+                includedItems.add(mPendingActions.mExecutingAnimationAction.mExpandPosition);
+            }
+            Collections.sort(includedItems);
+            for (final int itemPosition : includedItems) {
+                if (itemPosition >= firstRender) {
+                    break;
+                }
+                int movingDiff = mPendingActions
+                        .getItemSize(itemPosition, mLayoutHelper.mDecoratedChildHeight, getHeightNoPadding()) - mLayoutHelper.mDecoratedChildHeight;
+                do {
+                    if (movingDiff <= Math.abs(tmpScroll)) {
+                        tmpScroll += movingDiff;
+                        movingDiff = 0;
+                    } else {
+                        movingDiff -= Math.abs(tmpScroll);
+                        firstRender -= 1;
+                        tmpScroll = -mPendingActions.getItemSize(firstRender, mLayoutHelper.mDecoratedChildHeight, getHeightNoPadding());
+                    }
+                } while (0 < movingDiff);
+            }
+        }
+
+        return new Pair<>(firstRender, tmpScroll);
     }
 
     private void selectOpenItemPosition(final int position) {
@@ -290,12 +334,7 @@ public class ExpandLayoutManager extends RecyclerView.LayoutManager {
     }
 
     protected int getMaxScrollOffset() {
-        // getScrollItemSize() * (mItemsCount - 1) - getHeightNoPadding())
         return mPendingActions.getMaxSize(mItemsCount, mLayoutHelper.mDecoratedChildHeight, getHeightNoPadding());
-    }
-
-    protected int getScrollItemSize() {
-        return mLayoutHelper.mDecoratedChildHeight;
     }
 
     protected int getWidthNoPadding() {
@@ -504,9 +543,7 @@ public class ExpandLayoutManager extends RecyclerView.LayoutManager {
                 return Math.round(decoratedChildHeight + (maxHeight - decoratedChildHeight) * mValueListener.mAnimationProgress);
             }
             if (mExecutingAnimationAction.mCollapsePosition == adapterPosition) {
-                final int itemSize = Math.round(maxHeight - (maxHeight - decoratedChildHeight) * mValueListener.mAnimationProgress);
-                Log.e("!!!!!!!!", "item size: " + itemSize + "; decoratedChildHeight" + decoratedChildHeight);
-                return itemSize;
+                return Math.round(maxHeight - (maxHeight - decoratedChildHeight) * mValueListener.mAnimationProgress);
             }
             return decoratedChildHeight;
         }
@@ -557,7 +594,7 @@ public class ExpandLayoutManager extends RecyclerView.LayoutManager {
 
                 final int needToScroll = Math.round(mScrollOffset * mAnimationProgress - mScrolledOffset);
                 mScrolledOffset += needToScroll;
-                if (0 == mExpandLayoutManager.scrollBy(needToScroll, mRecycler, mState, false)) {
+                if (0 == mExpandLayoutManager.scrollBy(needToScroll, mRecycler, mState)) {
                     mExpandLayoutManager.fillData(mRecycler, mState, false);
                 }
 
@@ -596,35 +633,6 @@ public class ExpandLayoutManager extends RecyclerView.LayoutManager {
             public void onAnimationRepeat(final Animator animation) {
 
             }
-        }
-    }
-
-    private static final class AnimationAction {
-
-        private int mExpandPosition = INVALID_POSITION;
-        private int mCollapsePosition = INVALID_POSITION;
-
-        @SuppressWarnings("NonFinalFieldReferenceInEquals")
-        @Override
-        public boolean equals(final Object o) {
-            if (this == o) {
-                return true;
-            }
-            if (!(o instanceof AnimationAction)) {
-                return false;
-            }
-
-            final AnimationAction animationAction = (AnimationAction) o;
-
-            return mExpandPosition == animationAction.mExpandPosition && mCollapsePosition == animationAction.mCollapsePosition;
-        }
-
-        @SuppressWarnings("NonFinalFieldReferencedInHashCode")
-        @Override
-        public int hashCode() {
-            int result = mExpandPosition;
-            result = 31 * result + mCollapsePosition;
-            return result;
         }
     }
 

@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.b_action).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
-                layoutManager.actionItem(10);
+                layoutManager.actionItem(1000);
             }
         });
     }
