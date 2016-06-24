@@ -8,7 +8,7 @@
 ## Integration with Gradle (comming soon)
 
 ```
-    compile 'com.azoft.expandlayoutmanager:expandlayoutmanager:1.0'
+    compile 'com.azoft.expandlayoutmanager:expandlayoutmanager:1.0.0'
 ```
 
 ## Description
