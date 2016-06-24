@@ -14,7 +14,9 @@
         android:id="@+id/b_action"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Action on 1000 element"
         android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"/>
 
 </RelativeLayout>
