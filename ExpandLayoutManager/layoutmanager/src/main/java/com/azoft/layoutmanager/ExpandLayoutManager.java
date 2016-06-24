@@ -1,40 +1,41 @@
 package com.azoft.layoutmanager;
 
-import android.animation.Animator;
-import android.animation.ValueAnimator;
+import android.os.Parcelable;
 import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Pair;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.lang.ref.WeakReference;
+import com.azoft.layoutmanager.model.ExpandModel;
+import com.azoft.layoutmanager.model.SimpleExpandModel;
+import com.azoft.layoutmanager.view.AnimationView;
+
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
-@SuppressWarnings("ClassWithTooManyMethods")
 public class ExpandLayoutManager extends RecyclerView.LayoutManager {
 
     public static final int INVALID_POSITION = -1;
 
-    private final LayoutHelper mLayoutHelper = new LayoutHelper();
-
-    private final PendingActions mPendingActions = new PendingActions();
-
-    private int mOpenItemPosition = INVALID_POSITION;
-    private int mItemsCount;
+    private static final int DEFAULT_ANIMATION_DURATION = 1000;
 
     private final ExpandModel mExpandModel;
+    private final LayoutHelper mLayoutHelper;
+
+    private final List<View> mTmpRemoveList = new ArrayList<>();
 
     public ExpandLayoutManager() {
-        this(new SimpleExpandModel());
+        this(DEFAULT_ANIMATION_DURATION);
     }
 
-    public ExpandLayoutManager(final ExpandModel expandModel) {
+    public ExpandLayoutManager(final int animationDuration) {
+        this(new SimpleExpandModel(animationDuration));
+    }
+
+    public ExpandLayoutManager(@NonNull final ExpandModel expandModel) {
         mExpandModel = expandModel;
+        mLayoutHelper = new LayoutHelper(mExpandModel);
     }
 
     @Override
@@ -83,7 +84,7 @@ public class ExpandLayoutManager extends RecyclerView.LayoutManager {
             }
             expandPosition = adapterPosition;
         }
-        mPendingActions.addAction(this, AnimationAction.createdAction(expandPosition, collapsePosition));
+        mExpandModel.addAction(this, AnimationAction.createdAction(expandPosition, collapsePosition));
     }
 
     public void expandItem(final int adapterPosition) {
@@ -99,42 +100,38 @@ public class ExpandLayoutManager extends RecyclerView.LayoutManager {
                 collapsePosition = getOpenOrOpeningItemPosition();
             }
         }
-        mPendingActions.addAction(this, AnimationAction.createdAction(adapterPosition, collapsePosition));
+        mExpandModel.addAction(this, AnimationAction.createdAction(adapterPosition, collapsePosition));
     }
 
     public void collapseItem(final int adapterPosition) {
         if (0 > adapterPosition) {
             throw new IllegalArgumentException("adapter position can't be less then 0");
         }
-        if (getOpenOrOpeningItemPosition() != adapterPosition || adapterPosition == mPendingActions.getCollapseItem()) {
+        if (getOpenOrOpeningItemPosition() != adapterPosition) {
             // nothing to do
             return;
         }
-        mPendingActions.addAction(this, AnimationAction.createCollapseAction(adapterPosition));
+        mExpandModel.addAction(this, AnimationAction.createCollapseAction(adapterPosition));
     }
 
     public int getOpenOrOpeningItemPosition() {
-        return INVALID_POSITION == mOpenItemPosition ? mPendingActions.getExpandItem() : mOpenItemPosition;
+        return mExpandModel.getExpandOrExpandingItem();
     }
 
     public boolean isItemExpandOrExpanding() {
         return INVALID_POSITION != getOpenOrOpeningItemPosition();
     }
 
-    public boolean isItemCollapsing() {
-        return INVALID_POSITION != mPendingActions.getCollapseItem();
-    }
-
     @SuppressWarnings("RefusedBequest")
     @Override
     public void scrollToPosition(final int position) {
-        mPendingActions.mPendingScrollPosition = position;
+        mExpandModel.setPendingScrollPosition(position);
         requestLayout();
     }
 
     @Override
     public boolean canScrollVertically() {
-        return 0 != getChildCount() && !isItemExpandOrExpanding() && !isItemCollapsing();
+        return 0 != getChildCount() && !isItemExpandOrExpanding();
     }
 
     @Override
@@ -143,23 +140,13 @@ public class ExpandLayoutManager extends RecyclerView.LayoutManager {
     }
 
     @CallSuper
-    protected int scrollBy(final int diff, @NonNull final RecyclerView.Recycler recycler, @NonNull final RecyclerView.State state) {
+    public int scrollBy(final int diff, @NonNull final RecyclerView.Recycler recycler, @NonNull final RecyclerView.State state) {
         if (0 == getChildCount()) {
             return 0;
         }
-        final int resultScroll;
 
-        final int maxOffset = getMaxScrollOffset();
-        if (0 > mLayoutHelper.mScrollOffset + diff) {
-            resultScroll = -mLayoutHelper.mScrollOffset; //to make it 0
-        } else if (mLayoutHelper.mScrollOffset + diff > maxOffset) {
-            resultScroll = maxOffset - mLayoutHelper.mScrollOffset; //to make it maxOffset
-        } else {
-            resultScroll = diff;
-        }
-
+        final int resultScroll = mExpandModel.scrollBy(diff, state.getItemCount(), getHeight());
         if (0 != resultScroll) {
-            mLayoutHelper.mScrollOffset += resultScroll;
             fillData(recycler, state, false);
         }
         return resultScroll;
@@ -167,7 +154,7 @@ public class ExpandLayoutManager extends RecyclerView.LayoutManager {
 
     @Override
     public void onMeasure(final RecyclerView.Recycler recycler, final RecyclerView.State state, final int widthSpec, final int heightSpec) {
-        mLayoutHelper.mDecoratedChildHeight = null;
+        mExpandModel.onMeasure(recycler, state);
 
         super.onMeasure(recycler, state, widthSpec, heightSpec);
     }
@@ -176,173 +163,55 @@ public class ExpandLayoutManager extends RecyclerView.LayoutManager {
     @Override
     @CallSuper
     public void onLayoutChildren(@NonNull final RecyclerView.Recycler recycler, @NonNull final RecyclerView.State state) {
-        mItemsCount = state.getItemCount();
-        if (0 == mItemsCount) {
-            removeAndRecycleAllViews(recycler);
-            selectOpenItemPosition(INVALID_POSITION);
-            return;
-        }
+        final boolean childMeasuringNeeded = mExpandModel.checkRemeasureNeeded(this, recycler, state);
 
-        final boolean childMeasuringNeeded = mLayoutHelper.onActionsInOnLayout(this, recycler, state);
-
-        mPendingActions.doBeforeFillActionsInPriority(this, recycler, state);
+        mExpandModel.doBeforeFillActionsInPriority(this, recycler, state);
 
         fillData(recycler, state, childMeasuringNeeded);
 
-        mPendingActions.doAfterFillActionsInPriority(this, recycler, state);
+        mExpandModel.doAfterFillActionsInPriority();
     }
 
-    private void fillData(@NonNull final RecyclerView.Recycler recycler, @NonNull final RecyclerView.State state, final boolean childMeasuringNeeded) {
-        generateLayoutOrder(state);
+    public void fillData(@NonNull final RecyclerView.Recycler recycler, @NonNull final RecyclerView.State state, final boolean childMeasuringNeeded) {
+        mLayoutHelper.generateLayoutOrder(state, getHeight());
+
         removeAndRecycleUnusedViews(mLayoutHelper, recycler);
 
-        fillDataVertical(recycler, getWidthNoPadding(), childMeasuringNeeded);
+        fillDataVertical(recycler, childMeasuringNeeded);
 
         recycler.clear();
     }
 
-    private void fillDataVertical(final RecyclerView.Recycler recycler, final int width, final boolean childMeasuringNeeded) {
+    private void fillDataVertical(final RecyclerView.Recycler recycler, final boolean measuringNeeded) {
         final int start = getPaddingStart();
-        final int end = start + width;
+        final int end = start + getWidth() - getPaddingEnd() - getPaddingStart();
 
-        for (int i = 0, count = mLayoutHelper.mLayoutOrder.size(); i < count; ++i) {
-            final LayoutOrder layoutOrder = mLayoutHelper.mLayoutOrder.get(i);
-
-            fillChildItem(start, layoutOrder.mTop, end, layoutOrder.mBottom, layoutOrder, recycler, childMeasuringNeeded);
-        }
-    }
-
-    @SuppressWarnings("MethodWithTooManyParameters")
-    private void fillChildItem(final int start, final int top, final int end, final int bottom, @NonNull final LayoutOrder layoutOrder, @NonNull final RecyclerView.Recycler recycler, final boolean childMeasuringNeeded) {
-        final View view = bindChild(layoutOrder.mItemAdapterPosition, recycler, childMeasuringNeeded);
-        view.layout(start, top, end, bottom);
-    }
-
-    private void generateLayoutOrder(@NonNull final RecyclerView.State state) {
-        mItemsCount = state.getItemCount();
-
-        mLayoutHelper.clearItems();
-
-        final Pair<Integer, Integer> firstRenderData = generateFirstRenderData();
-
-        if (INVALID_POSITION == mOpenItemPosition) {
-            int top = firstRenderData.second;
-
-            for (int i = firstRenderData.first; i < mItemsCount - 1; ++i) {
-                final int itemHeight = mPendingActions.getItemSize(i, mLayoutHelper.mDecoratedChildHeight, getHeightNoPadding());
-                final int bottom = top + itemHeight;
-
-                mLayoutHelper.createItem(i, top, bottom);
-
-                top = bottom;
-                if (top > getHeightNoPadding()) {
-                    break;
-                }
-            }
-        } else {
-            final int top = 0;
-            final int bottom = getHeightNoPadding();
-
-            mLayoutHelper.createItem(firstRenderData.first, top, bottom);
+        for (final LayoutHelper.LayoutOrder layoutOrder : mLayoutHelper.getLayoutOrder()) {
+            final View view = bindChild(layoutOrder.getItemAdapterPosition(), recycler, measuringNeeded);
+            view.layout(start, layoutOrder.getTop(), end, layoutOrder.getBottom());
         }
     }
 
     private void removeAndRecycleUnusedViews(final LayoutHelper layoutHelper, final RecyclerView.Recycler recycler) {
-        final List<View> viewsToRemove = new ArrayList<>();
+        mTmpRemoveList.clear();
         for (int i = 0, size = getChildCount(); i < size; ++i) {
             final View child = getChildAt(i);
             final ViewGroup.LayoutParams lp = child.getLayoutParams();
             if (!(lp instanceof RecyclerView.LayoutParams)) {
-                viewsToRemove.add(child);
+                mTmpRemoveList.add(child);
                 continue;
             }
             final RecyclerView.LayoutParams recyclerViewLp = (RecyclerView.LayoutParams) lp;
             final int adapterPosition = recyclerViewLp.getViewAdapterPosition();
             if (recyclerViewLp.isItemRemoved() || !layoutHelper.hasAdapterPosition(adapterPosition)) {
-                viewsToRemove.add(child);
+                mTmpRemoveList.add(child);
             }
         }
 
-        for (final View view : viewsToRemove) {
+        for (final View view : mTmpRemoveList) {
             removeAndRecycleView(view, recycler);
         }
-    }
-
-    private int calculateScrollForSelectingPosition(final int scrollToItemPosition, final RecyclerView.State state) {
-        final int fixedItemPosition = scrollToItemPosition < state.getItemCount() ? scrollToItemPosition : state.getItemCount() - 1;
-
-        int tmpScroll = fixedItemPosition * mLayoutHelper.mDecoratedChildHeight;
-
-        if (null != mPendingActions.mExecutingAnimationAction) {
-            final List<Integer> includedItems = new ArrayList<>();
-            if (INVALID_POSITION != mPendingActions.mExecutingAnimationAction.mCollapsePosition) {
-                includedItems.add(mPendingActions.mExecutingAnimationAction.mCollapsePosition);
-            }
-            if (INVALID_POSITION != mPendingActions.mExecutingAnimationAction.mExpandPosition) {
-                includedItems.add(mPendingActions.mExecutingAnimationAction.mExpandPosition);
-            }
-            Collections.sort(includedItems);
-            for (final int itemPosition : includedItems) {
-                if (itemPosition >= fixedItemPosition) {
-                    break;
-                }
-                final int movingDiff = mPendingActions
-                        .getItemSize(itemPosition, mLayoutHelper.mDecoratedChildHeight, getHeightNoPadding()) - mLayoutHelper.mDecoratedChildHeight;
-                tmpScroll += movingDiff;
-            }
-        }
-
-        return tmpScroll;
-    }
-
-    private Pair<Integer, Integer> generateFirstRenderData() {
-        int firstRender = mLayoutHelper.mScrollOffset / mLayoutHelper.mDecoratedChildHeight;
-        int tmpScroll = firstRender * mLayoutHelper.mDecoratedChildHeight - mLayoutHelper.mScrollOffset;
-        if (null != mPendingActions.mExecutingAnimationAction) {
-            final List<Integer> includedItems = new ArrayList<>();
-            if (INVALID_POSITION != mPendingActions.mExecutingAnimationAction.mCollapsePosition) {
-                includedItems.add(mPendingActions.mExecutingAnimationAction.mCollapsePosition);
-            }
-            if (INVALID_POSITION != mPendingActions.mExecutingAnimationAction.mExpandPosition) {
-                includedItems.add(mPendingActions.mExecutingAnimationAction.mExpandPosition);
-            }
-            Collections.sort(includedItems);
-            for (final int itemPosition : includedItems) {
-                if (itemPosition >= firstRender) {
-                    break;
-                }
-                int movingDiff = mPendingActions
-                        .getItemSize(itemPosition, mLayoutHelper.mDecoratedChildHeight, getHeightNoPadding()) - mLayoutHelper.mDecoratedChildHeight;
-                do {
-                    if (movingDiff <= Math.abs(tmpScroll)) {
-                        tmpScroll += movingDiff;
-                        movingDiff = 0;
-                    } else {
-                        movingDiff -= Math.abs(tmpScroll);
-                        firstRender -= 1;
-                        tmpScroll = -mPendingActions.getItemSize(firstRender, mLayoutHelper.mDecoratedChildHeight, getHeightNoPadding());
-                    }
-                } while (0 < movingDiff);
-            }
-        }
-
-        return new Pair<>(firstRender, tmpScroll);
-    }
-
-    private void selectOpenItemPosition(final int position) {
-        mOpenItemPosition = position;
-    }
-
-    protected int getMaxScrollOffset() {
-        return mPendingActions.getMaxSize(mItemsCount, mLayoutHelper.mDecoratedChildHeight, getHeightNoPadding());
-    }
-
-    protected int getWidthNoPadding() {
-        return getWidth();
-    }
-
-    protected int getHeightNoPadding() {
-        return getHeight();
+        mTmpRemoveList.clear();
     }
 
     private View bindChild(final int position, @NonNull final RecyclerView.Recycler recycler, final boolean childMeasuringNeeded) {
@@ -374,6 +243,8 @@ public class ExpandLayoutManager extends RecyclerView.LayoutManager {
             if (adapterPosition == position) {
                 if (recyclerLp.isItemChanged()) {
                     recycler.bindViewToPosition(child, position);
+                }
+                if (mExpandModel.updateChildStat((AnimationView) child, position) || recyclerLp.isItemChanged()) {
                     measureChildWithMargins(child, 0, 0);
                 }
                 return child;
@@ -382,267 +253,21 @@ public class ExpandLayoutManager extends RecyclerView.LayoutManager {
         final View view = recycler.getViewForPosition(position);
         recycler.bindViewToPosition(view, position);
         if (view instanceof AnimationView) {
-            ((AnimationView) view).setLayoutManager(this);
+            ((AnimationView) view).setExpandLayoutManager(this);
+            mExpandModel.updateChildStat((AnimationView) view, position);
             return view;
         } else {
             throw new IllegalArgumentException("This layout support only AnimationView childs!");
         }
     }
 
-    private static class LayoutHelper {
-
-        private Integer mDecoratedChildHeight;
-        private int mScrollOffset;
-
-        private final List<LayoutOrder> mLayoutOrder;
-        private final List<WeakReference<LayoutOrder>> mReusedItems;
-
-        LayoutHelper() {
-            mLayoutOrder = new ArrayList<>();
-            mReusedItems = new ArrayList<>();
-        }
-
-        public void clearItems() {
-            for (final LayoutOrder layoutOrder : mLayoutOrder) {
-                //noinspection ObjectAllocationInLoop
-                mReusedItems.add(new WeakReference<>(layoutOrder));
-            }
-            mLayoutOrder.clear();
-        }
-
-        public void createItem(final int adapterPosition, final int top, final int bottom) {
-            final LayoutOrder layoutOrder = createLayoutOrder();
-
-            layoutOrder.mItemAdapterPosition = adapterPosition;
-            layoutOrder.mTop = top;
-            layoutOrder.mBottom = bottom;
-
-            mLayoutOrder.add(layoutOrder);
-        }
-
-        private LayoutOrder createLayoutOrder() {
-            final Iterator<WeakReference<LayoutOrder>> iterator = mReusedItems.iterator();
-            while (iterator.hasNext()) {
-                final WeakReference<LayoutOrder> layoutOrderWeakReference = iterator.next();
-                final LayoutOrder layoutOrder = layoutOrderWeakReference.get();
-                iterator.remove();
-                if (null != layoutOrder) {
-                    return layoutOrder;
-                }
-            }
-            return new LayoutOrder();
-        }
-
-        public boolean hasAdapterPosition(final int adapterPosition) {
-            for (final LayoutOrder layoutOrder : mLayoutOrder) {
-                if (layoutOrder.mItemAdapterPosition == adapterPosition) {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        public boolean onActionsInOnLayout(final ExpandLayoutManager expandLayoutManager, final RecyclerView.Recycler recycler, final RecyclerView.State state) {
-            if (null == mDecoratedChildHeight) {
-                final AnimationView view = (AnimationView) recycler.getViewForPosition(0);
-                view.setLayoutManager(expandLayoutManager);
-                expandLayoutManager.addView(view);
-                expandLayoutManager.measureChildWithMargins(view, 0, 0);
-
-                mDecoratedChildHeight = expandLayoutManager.getDecoratedMeasuredHeight(view);
-                expandLayoutManager.removeAndRecycleView(view, recycler);
-
-                return true;
-            }
-            return false;
-        }
+    @Override
+    public Parcelable onSaveInstanceState() {
+        return mExpandModel.onSaveInstanceState(super.onSaveInstanceState());
     }
 
-    private static class PendingActions {
-
-        private int mPendingScrollPosition;
-
-        private AnimationAction mExecutingAnimationAction;
-        private AnimationAction mPendingAnimationAction;
-        private ValueUpdateListener mValueListener;
-
-        private ValueAnimator mProgressAnimator;
-
-        public void doBeforeFillActionsInPriority(final ExpandLayoutManager expandLayoutManager, final RecyclerView.Recycler recycler, final RecyclerView.State state) {
-            if (expandLayoutManager.canScrollVertically() && INVALID_POSITION != mPendingScrollPosition) {
-                expandLayoutManager.mLayoutHelper.mScrollOffset = expandLayoutManager.calculateScrollForSelectingPosition(mPendingScrollPosition, state);
-                mPendingScrollPosition = INVALID_POSITION;
-            }
-            /*
-        } else if (null != mPendingCarouselSavedState) {
-            mLayoutHelper.mScrollOffset = calculateScrollForSelectingPosition(mPendingCarouselSavedState.mCenterItemPosition, state);
-            mPendingCarouselSavedState = null;
-*/
-
-            if (null == mExecutingAnimationAction && null != mPendingAnimationAction) {
-                expandLayoutManager.mOpenItemPosition = INVALID_POSITION;
-
-                mExecutingAnimationAction = mPendingAnimationAction;
-                mProgressAnimator = null;
-
-                int scrollPositionDiff = 0;
-                if (INVALID_POSITION != mExecutingAnimationAction.mExpandPosition) {
-                    final int toScrollPosition = expandLayoutManager.calculateScrollForSelectingPosition(mExecutingAnimationAction.mExpandPosition, state);
-                    final int currentScrollPosition = expandLayoutManager.mLayoutHelper.mScrollOffset;
-                    scrollPositionDiff = toScrollPosition - currentScrollPosition;
-                }
-
-                mValueListener = new ValueUpdateListener(scrollPositionDiff, mExecutingAnimationAction, expandLayoutManager, recycler, state);
-
-                mPendingAnimationAction = null;
-            }
-        }
-
-        private ValueAnimator createAnimation() {
-            return ValueAnimator.ofFloat(0, 1).setDuration(10000);
-        }
-
-        public void doAfterFillActionsInPriority(final ExpandLayoutManager expandLayoutManager, final RecyclerView.Recycler recycler, final RecyclerView.State state) {
-            if (null != mExecutingAnimationAction && null == mProgressAnimator) {
-                mProgressAnimator = createAnimation();
-                mProgressAnimator.addUpdateListener(mValueListener);
-                mProgressAnimator.addListener(mValueListener);
-                mProgressAnimator.start();
-            }
-        }
-
-        public int getExpandItem() {
-            if (null == mExecutingAnimationAction) {
-                return INVALID_POSITION;
-            }
-            return mExecutingAnimationAction.mExpandPosition;
-        }
-
-        public int getCollapseItem() {
-            if (null == mExecutingAnimationAction) {
-                return INVALID_POSITION;
-            }
-            return mExecutingAnimationAction.mCollapsePosition;
-        }
-
-        public void addAction(final ExpandLayoutManager expandLayoutManager, final AnimationAction animationAction) {
-            if (null != mExecutingAnimationAction && GeneralUtils.equals(mExecutingAnimationAction, mPendingAnimationAction)) {
-                // the same data executing
-                return;
-            }
-            expandLayoutManager.mOpenItemPosition = INVALID_POSITION;
-            mPendingAnimationAction = animationAction;
-            expandLayoutManager.requestLayout();
-        }
-
-        public int getItemSize(final int adapterPosition, final int decoratedChildHeight, final int maxHeight) {
-            if (null == mExecutingAnimationAction) {
-                return decoratedChildHeight;
-            }
-            if (mExecutingAnimationAction.mExpandPosition == adapterPosition) {
-                return Math.round(decoratedChildHeight + (maxHeight - decoratedChildHeight) * mValueListener.mAnimationProgress);
-            }
-            if (mExecutingAnimationAction.mCollapsePosition == adapterPosition) {
-                return Math.round(maxHeight - (maxHeight - decoratedChildHeight) * mValueListener.mAnimationProgress);
-            }
-            return decoratedChildHeight;
-        }
-
-        public int getMaxSize(final int itemsCount, final int decoratedChildHeight, final int maxHeight) {
-            if (0 == itemsCount) {
-                return 0;
-            }
-            int fullSize = decoratedChildHeight * (itemsCount - 1);
-            if (null != mExecutingAnimationAction) {
-                if (INVALID_POSITION != mExecutingAnimationAction.mCollapsePosition) {
-                    fullSize = fullSize - decoratedChildHeight + getItemSize(mExecutingAnimationAction.mCollapsePosition, decoratedChildHeight, maxHeight);
-                }
-                if (INVALID_POSITION != mExecutingAnimationAction.mExpandPosition) {
-                    fullSize = fullSize - decoratedChildHeight + getItemSize(mExecutingAnimationAction.mExpandPosition, decoratedChildHeight, maxHeight);
-                }
-            }
-            if (fullSize < maxHeight) {
-                return 0;
-            }
-            return fullSize - maxHeight;
-        }
-
-        private static class ValueUpdateListener implements ValueAnimator.AnimatorUpdateListener, Animator.AnimatorListener {
-
-            private final ExpandLayoutManager mExpandLayoutManager;
-            private final RecyclerView.Recycler mRecycler;
-            private final RecyclerView.State mState;
-
-            private final AnimationAction mExecutingAnimationAction;
-            private final int mScrollOffset;
-
-            private int mScrolledOffset;
-
-            private float mAnimationProgress;
-
-            ValueUpdateListener(final int scrollOffset, final AnimationAction executingAnimationAction, final ExpandLayoutManager expandLayoutManager, final RecyclerView.Recycler recycler, final RecyclerView.State state) {
-                mScrollOffset = scrollOffset;
-                mExecutingAnimationAction = executingAnimationAction;
-                mExpandLayoutManager = expandLayoutManager;
-                mRecycler = recycler;
-                mState = state;
-            }
-
-            @Override
-            public void onAnimationUpdate(final ValueAnimator animation) {
-                mAnimationProgress = (float) animation.getAnimatedValue();
-
-                final int needToScroll = Math.round(mScrollOffset * mAnimationProgress - mScrolledOffset);
-                mScrolledOffset += needToScroll;
-                if (0 == mExpandLayoutManager.scrollBy(needToScroll, mRecycler, mState)) {
-                    mExpandLayoutManager.fillData(mRecycler, mState, false);
-                }
-
-                for (int i = 0; i < mExpandLayoutManager.getChildCount(); ++i) {
-                    final View child = mExpandLayoutManager.getChildAt(i);
-                    final ViewGroup.LayoutParams lp = child.getLayoutParams();
-                    if (lp instanceof RecyclerView.LayoutParams) {
-                        final int adapterPosition = ((RecyclerView.LayoutParams) lp).getViewAdapterPosition();
-                        if (adapterPosition == mExecutingAnimationAction.mExpandPosition) {
-                            ((AnimationView) child).doExpandAnimation(mAnimationProgress);
-                        } else if (adapterPosition == mExecutingAnimationAction.mCollapsePosition) {
-                            ((AnimationView) child).doCollapseAnimation(mAnimationProgress);
-                        }
-                    }
-                }
-            }
-
-            @Override
-            public void onAnimationStart(final Animator animation) {
-
-            }
-
-            @Override
-            public void onAnimationEnd(final Animator animation) {
-                mExpandLayoutManager.mOpenItemPosition = mExecutingAnimationAction.mExpandPosition;
-                mExpandLayoutManager.mPendingActions.mExecutingAnimationAction = null;
-                mExpandLayoutManager.requestLayout();
-            }
-
-            @Override
-            public void onAnimationCancel(final Animator animation) {
-
-            }
-
-            @Override
-            public void onAnimationRepeat(final Animator animation) {
-
-            }
-        }
-    }
-
-    private static class LayoutOrder {
-
-        /**
-         * Item adapter position
-         */
-        private int mItemAdapterPosition;
-        private int mTop;
-        private int mBottom;
+    @Override
+    public void onRestoreInstanceState(final Parcelable state) {
+        super.onRestoreInstanceState(mExpandModel.onRestoreInstanceState(state));
     }
 }

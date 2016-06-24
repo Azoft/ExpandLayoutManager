@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.azoft.expandlayoutmanager.data.CitiesResponse;
 import com.azoft.expandlayoutmanager.data.City;
 import com.azoft.layoutmanager.ExpandLayoutManager;
+import com.azoft.layoutmanager.view.SimpleAnimationView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -63,12 +64,6 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
 
         recyclerView.setAdapter(dataAdapter);
-        dataAdapter.setItemClickListener(new DataAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClicked(final int pos) {
-                layoutManager.actionItem(pos);
-            }
-        });
 
         //noinspection ConstantConditions
         findViewById(R.id.b_action).setOnClickListener(new View.OnClickListener() {
@@ -84,7 +79,6 @@ public class MainActivity extends AppCompatActivity {
         private final int[] mColors;
         private final List<City> mCityList;
         private final Random mRandom = new Random();
-        private OnItemClickListener mItemClickListener;
 
         DataAdapter(final List<City> cityList) {
             mCityList = cityList;
@@ -95,29 +89,23 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        public void setItemClickListener(final OnItemClickListener itemClickListener) {
-            mItemClickListener = itemClickListener;
-        }
-
         @Override
         public InfoViewHolder onCreateViewHolder(final ViewGroup parent, final int position) {
             return new InfoViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.info_item, parent, false));
         }
 
         @Override
-        public void onBindViewHolder(final InfoViewHolder viewHolder, final int position) {
+        public void onBindViewHolder(final InfoViewHolder holder, final int position) {
             final City city = mCityList.get(position);
-            viewHolder.mNameView.setText(city.getName());
-            viewHolder.mTextView.setText(city.getDescription());
-            viewHolder.mItemListView.setOnClickListener(new View.OnClickListener() {
+            holder.mNameView.setText(city.getName());
+            holder.mTextView.setText(city.getDescription());
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(final View v) {
-                    if (null != mItemClickListener && v.isEnabled()) {
-                        mItemClickListener.onItemClicked(position);
-                    }
+                    ((SimpleAnimationView) v).actionItem();
                 }
             });
-            viewHolder.mCoverImage.setBackgroundColor(mColors[position]);
+            holder.mCoverImage.setBackgroundColor(mColors[position]);
         }
 
         @Override
@@ -130,20 +118,13 @@ public class MainActivity extends AppCompatActivity {
             private final ImageView mCoverImage;
             private final TextView mNameView;
             private final TextView mTextView;
-            private final View mItemListView;
 
             public InfoViewHolder(final View view) {
                 super(view);
                 mCoverImage = (ImageView) view.findViewById(R.id.iv_icon_id);
                 mNameView = (TextView) view.findViewById(R.id.tv_name_id);
                 mTextView = (TextView) view.findViewById(R.id.tv_text_id);
-                mItemListView = view.findViewById(R.id.rl_item_id);
             }
         }
-
-        public interface OnItemClickListener {
-            void onItemClicked(int pos);
-        }
     }
-
 }
