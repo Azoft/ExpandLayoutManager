@@ -221,8 +221,6 @@ public class ExpandLayoutManager extends RecyclerView.LayoutManager {
             addView(view);
             measureChildWithMargins(view, 0, 0);
         } else {
-            detachView(view);
-            attachView(view);
             if (childMeasuringNeeded) {
                 measureChildWithMargins(view, 0, 0);
             }

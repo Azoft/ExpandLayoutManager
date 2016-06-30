@@ -63,6 +63,7 @@ public class SimpleExpandModel implements ExpandModel {
         if (expandLayoutManager.canScrollVertically() && ExpandLayoutManager.INVALID_POSITION != mPendingScrollPosition) {
             mScrollOffset = calculateScrollForSelectingPosition(mPendingScrollPosition, state, expandLayoutManager.getHeight());
             mPendingScrollPosition = ExpandLayoutManager.INVALID_POSITION;
+            mPendingSavedState = null;
         } else if (null != mPendingSavedState) {
             if (ExpandLayoutManager.INVALID_POSITION == mPendingSavedState.mExpandItemPosition) {
                 mScrollOffset = mPendingSavedState.mScrollOffset;
