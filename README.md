@@ -5,7 +5,7 @@
 
 ![Example](resources/animation_layout_manager.gif "working example")
 
-## Integration with Gradle (comming soon)
+## Integration with Gradle
 
 ```
     compile 'com.azoft.expandlayoutmanager:expandlayoutmanager:1.0.0'
