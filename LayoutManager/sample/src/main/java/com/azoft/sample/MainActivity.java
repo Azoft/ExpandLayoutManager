@@ -113,13 +113,13 @@ public class MainActivity extends AppCompatActivity {
             return null == mCityList ? 0 : mCityList.size();
         }
 
-        public static class InfoViewHolder extends RecyclerView.ViewHolder {
+        static class InfoViewHolder extends RecyclerView.ViewHolder {
 
             private final ImageView mCoverImage;
             private final TextView mNameView;
             private final TextView mTextView;
 
-            public InfoViewHolder(final View view) {
+            InfoViewHolder(final View view) {
                 super(view);
                 mCoverImage = (ImageView) view.findViewById(R.id.iv_icon_id);
                 mNameView = (TextView) view.findViewById(R.id.tv_name_id);

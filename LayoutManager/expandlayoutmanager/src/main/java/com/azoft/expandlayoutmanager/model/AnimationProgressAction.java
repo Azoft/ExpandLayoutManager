@@ -64,7 +64,7 @@ class AnimationProgressAction {
         return animationProgress;
     }
 
-    public List<Integer> getCollapseItems() {
+    List<Integer> getCollapseItems() {
         if (mCollapseItems.isEmpty()) {
             return Collections.emptyList();
         }
@@ -75,14 +75,14 @@ class AnimationProgressAction {
         return mTmpList;
     }
 
-    public int getExpandItem() {
+    int getExpandItem() {
         if (null == mExpandItem) {
             return ExpandLayoutManager.INVALID_POSITION;
         }
         return mExpandItem.mAdapterPosition;
     }
 
-    public Float getExpandProgress(final int adapterPosition) {
+    Float getExpandProgress(final int adapterPosition) {
         if (null == mExpandItem) {
             return null;
         }
@@ -92,7 +92,7 @@ class AnimationProgressAction {
         return null;
     }
 
-    public Float getCollapseProgress(final int adapterPosition) {
+    Float getCollapseProgress(final int adapterPosition) {
         final AnimationProgress animationProgress = getCollapseItem(adapterPosition);
         return null == animationProgress ? null : animationProgress.mProgress;
     }
@@ -106,7 +106,7 @@ class AnimationProgressAction {
         return null;
     }
 
-    public void addProgress(final float progress) {
+    void addProgress(final float progress) {
         if (null != mExpandItem) {
             addProgressInner(mExpandItem, progress);
         }
@@ -119,12 +119,12 @@ class AnimationProgressAction {
         expandItem.mProgress = Math.min(1, expandItem.mProgress + progress);
     }
 
-    public void clearData() {
+    void clearData() {
         mExpandItem = null;
         mCollapseItems.clear();
     }
 
-    public boolean checkEnds() {
+    boolean checkEnds() {
         if (null != mExpandItem && mExpandItem.mProgress < 0.9999f) {
             return false;
         }
@@ -136,18 +136,18 @@ class AnimationProgressAction {
         return true;
     }
 
-    public boolean hasCollapseItems() {
+    boolean hasCollapseItems() {
         return !mCollapseItems.isEmpty();
     }
 
-    public static class AnimationProgress implements Serializable {
+    private static class AnimationProgress implements Serializable {
 
         private static final long serialVersionUID = 8091777646155824257L;
 
         private final int mAdapterPosition;
         private float mProgress;
 
-        public AnimationProgress(final int adapterPosition) {
+        AnimationProgress(final int adapterPosition) {
             mAdapterPosition = adapterPosition;
         }
 

@@ -8,10 +8,11 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/height_item"
             android:background="@drawable/shadow"
+            android:orientation="horizontal"
             android:padding="20dp">
 
             <ImageView
@@ -19,16 +20,16 @@
                 android:layout_width="70dip"
                 android:layout_height="70dip"
                 android:layout_centerVertical="true"
-                android:background="@color/material_deep_teal_200"
                 android:contentDescription="@null" />
 
             <TextView
                 android:id="@+id/tv_name_id"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
                 android:layout_marginLeft="10dp"
-                android:layout_toRightOf="@id/iv_icon_id"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:singleLine="true"
                 android:textIsSelectable="false"
                 android:textSize="24sp"
                 android:textStyle="bold" />
@@ -36,10 +37,9 @@
             <ProgressBar
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true" />
+                android:visibility="gone" />
 
-        </RelativeLayout>
+        </LinearLayout>
 
         <LinearLayout
             android:id="@id/view_to_animate"

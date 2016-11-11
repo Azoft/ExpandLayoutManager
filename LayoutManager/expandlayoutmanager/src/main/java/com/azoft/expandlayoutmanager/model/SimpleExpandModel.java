@@ -391,17 +391,17 @@ public class SimpleExpandModel implements ExpandModel {
 
         }
 
-        public void updateExpandItemData(final AnimationProgressAction animationProgressAction) {
+        void updateExpandItemData(final AnimationProgressAction animationProgressAction) {
             mAnimationProgressAction = animationProgressAction;
         }
 
-        public void restartInner(final ValueAnimator progressAnimator) {
+        void restartInner(final ValueAnimator progressAnimator) {
             progressAnimator.removeAllListeners();
             progressAnimator.cancel();
             startInner(progressAnimator);
         }
 
-        public void startInner(final ValueAnimator progressAnimator) {
+        void startInner(final ValueAnimator progressAnimator) {
             progressAnimator.removeAllListeners();
             progressAnimator.addUpdateListener(this);
             progressAnimator.addListener(this);

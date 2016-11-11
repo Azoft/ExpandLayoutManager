@@ -43,6 +43,7 @@ public class ExpandLayoutManager extends RecyclerView.LayoutManager {
         return new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
     }
 
+    @SuppressWarnings("WeakerAccess")
     public void actionItem(@NonNull final AnimationView animationView) {
         final ViewGroup.LayoutParams layoutParams = animationView.getLayoutParams();
         if (layoutParams instanceof RecyclerView.LayoutParams) {
@@ -52,6 +53,7 @@ public class ExpandLayoutManager extends RecyclerView.LayoutManager {
         }
     }
 
+    @SuppressWarnings("WeakerAccess")
     public void expandItem(@NonNull final AnimationView animationView) {
         final ViewGroup.LayoutParams layoutParams = animationView.getLayoutParams();
         if (layoutParams instanceof RecyclerView.LayoutParams) {
@@ -61,6 +63,7 @@ public class ExpandLayoutManager extends RecyclerView.LayoutManager {
         }
     }
 
+    @SuppressWarnings("WeakerAccess")
     public void collapseItem(@NonNull final AnimationView animationView) {
         final ViewGroup.LayoutParams layoutParams = animationView.getLayoutParams();
         if (layoutParams instanceof RecyclerView.LayoutParams) {
@@ -70,6 +73,7 @@ public class ExpandLayoutManager extends RecyclerView.LayoutManager {
         }
     }
 
+    @SuppressWarnings("WeakerAccess")
     public void actionItem(final int adapterPosition) {
         if (0 > adapterPosition) {
             throw new IllegalArgumentException("adapter position can't be less then 0");
@@ -87,6 +91,7 @@ public class ExpandLayoutManager extends RecyclerView.LayoutManager {
         mExpandModel.addAction(this, AnimationAction.createdAction(expandPosition, collapsePosition));
     }
 
+    @SuppressWarnings("WeakerAccess")
     public void expandItem(final int adapterPosition) {
         if (0 > adapterPosition) {
             throw new IllegalArgumentException("adapter position can't be less then 0");
@@ -103,6 +108,7 @@ public class ExpandLayoutManager extends RecyclerView.LayoutManager {
         mExpandModel.addAction(this, AnimationAction.createdAction(adapterPosition, collapsePosition));
     }
 
+    @SuppressWarnings("WeakerAccess")
     public void collapseItem(final int adapterPosition) {
         if (0 > adapterPosition) {
             throw new IllegalArgumentException("adapter position can't be less then 0");
@@ -114,10 +120,12 @@ public class ExpandLayoutManager extends RecyclerView.LayoutManager {
         mExpandModel.addAction(this, AnimationAction.createCollapseAction(adapterPosition));
     }
 
+    @SuppressWarnings("WeakerAccess")
     public int getOpenOrOpeningItemPosition() {
         return mExpandModel.getExpandOrExpandingItem();
     }
 
+    @SuppressWarnings("WeakerAccess")
     public boolean isItemExpandOrExpanding() {
         return INVALID_POSITION != getOpenOrOpeningItemPosition();
     }
